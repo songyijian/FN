@@ -66,14 +66,19 @@ isFn 1.0.0 , 判断函数
         return Object.prototype.toString.call(o).slice(8, -1) === 'Set'
     }
 
-    function isFalse (o) {
+    function isFalse (o) { //是不是 false
         if (!o || o === 'null' || o === 'undefined' || o === 'false' || o === 'NaN') return true
             return false
     }
 
-    function isTrue (o) {
+    function isTrue (o) { //是不是true
         return !this.isFalse(o)
     }
+
+    function isInteger(obj) { //是不是整数
+        return typeof obj === 'number' && obj%1 === 0
+    }
+
 
 
     /**

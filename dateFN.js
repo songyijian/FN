@@ -34,14 +34,17 @@ function YYMMSStogetTime(timeStr) {
 
 /*
   获取日期之前所有的天数
+  依赖：dateToYYMMSS 、 YYMMSStogetTime
 */
 function BetweenDay(begin, end) {
     var unixDb = YYMMSStogetTime(begin);
     var unixDe = YYMMSStogetTime(end);
+    var arrtimelist = []
     for (var k = unixDb; k <= unixDe;) {
-        console.log(dateToYYMMSS(new Date(parseInt(k))));
+        arrtimelist.push(dateToYYMMSS(new Date(parseInt(k))))
         k = k + 24 * 60 * 60 * 1000;
     }
+    return arrtimelist
 }
 
 
