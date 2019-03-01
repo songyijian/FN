@@ -2,26 +2,39 @@
 
 // 获取两个如期之间的所有日期列表
 
-// Date.prototype.format = function() {
-//     var mouth = (this.getMonth() + 1)>=10?(this.getMonth() + 1):('0'+(this.getMonth() + 1)); // 获取年份
-//     var day = this.getDate()>=10?this.getDate():('0'+this.getDate());//天两位
-//     return this.getFullYear() + '-' +  mouth + "-" + day;   //返回日期
-// }
-
-
-
-/*
-  new Date() 转 yy-mm-ss
-  toYYMMSS(new Date())  // "2018-10-12"
-*/
-function dateToYYMMSS(timeDate) {
-    function isDate (o) {  return Object.prototype.toString.call(o).slice(8, -1) === 'Date' }
-    if(!isDate(timeDate )){ new Error('dateToYYMMSS 参数不是 一个Date对象 ')}
-
-    var mouth = (timeDate.getMonth() + 1)>=10?(timeDate.getMonth() + 1):('0'+(timeDate.getMonth() + 1)); // 获取年份
-    var day = timeDate.getDate()>=10?timeDate.getDate():('0'+timeDate.getDate());//天两位
-    return timeDate.getFullYear() + '-' +  mouth + "-" + day;   //返回日期
+/**
+ * new Date() 转 yy-mm-ss
+ * toYYMMSS(new Date())       // "2018-10-12"
+ * toYYMMSS("2019-01-09T11:19:07.483Z") // "2019-01-09"
+ */
+function dateToYYMMSS(oDate) {
+    function isDate(o) { return Object.prototype.toString.call(o).slice(8, -1) === 'Date' }
+    if (typeof oDate === 'undefined') {
+        new Error('参数错误');
+        return
+    }
+    let timeDate = null;
+    if (isDate(oDate)) {
+        timeDate = oDate
+    } else if (typeof oDate === "string") {
+        let stime = new Date(oDate)
+        if (stime == "Invalid Date") {
+            new Error('不是一个合法参数')
+            return
+        } else {
+            timeDate = stime
+        }
+    } else {
+        new Error('不是一个合法参数')
+        return
+    }
+    let mouth = (timeDate.getMonth() + 1) >= 10 ? (timeDate.getMonth() + 1) : ('0' + (timeDate.getMonth() + 1));
+    let day = timeDate.getDate() >= 10 ? timeDate.getDate() : ('0' + timeDate.getDate());
+    return timeDate.getFullYear() + '-' + mouth + "-" + day
 }
+
+
+
 
 /*
   yy-mm-ss 转 时间戳
@@ -32,7 +45,10 @@ function YYMMSStogetTime(timeStr) {
   return new Date().setUTCFullYear(timearr[0], timearr[1] - 1, timearr[2]);
 }
 
+
+
 /*
+
   获取日期之前所有的天数
   依赖：dateToYYMMSS 、 YYMMSStogetTime
 */
@@ -46,10 +62,6 @@ function BetweenDay(begin, end) {
     }
     return arrtimelist
 }
-
-
-
-
 
 
 
@@ -84,9 +96,6 @@ function getFirstDay(_year,_month) {
 
 
 
-
-
-
 //判断闰年
 function runNian(_year) {
     if(_year%400 === 0 || (_year%4 === 0 && _year%100 !== 0) ) {
@@ -94,6 +103,8 @@ function runNian(_year) {
     }
     else { return false; }
 }
+
+
 
 /*
 每个月有几天
@@ -121,11 +132,6 @@ new Date().getDay() //返回自然数0～6
 */
 new Date().getDay() === 0 ? 7 : new Date().getDay()
 
-
-
-
-
-
     /*
     ** yijian.song
     * desc  获取n天前的date对象
@@ -141,11 +147,8 @@ new Date().getDay() === 0 ? 7 : new Date().getDay()
     }
 
 
-
-
-
 /**
-根据年月生成日历数组信息
+ * 根据年月生成日历数组信息
 */
 function getMonthDayArray(year,month) {
   function runNian(_year) { //判断闰年
@@ -153,8 +156,6 @@ function getMonthDayArray(year,month) {
   }
   var _y =  year || new Date().getFullYear();
   var _m = month ? month-1 : new Date().getMonth(); //几月份
-  // var d = new Date().getDate();
-
   // 获取哪年的x月有几天
   function getdaylength(a_year,a_month) {
     return new Array(31,28+runNian(a_year),31,30,31,31,30,31,30,31,30,31)[a_month]

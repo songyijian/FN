@@ -7,9 +7,8 @@ isFn 1.0.0 , 判断函数
 !function(){
 
     /**
-    数据类型验证
+      数据类型验证
     */
-
     function isString (o) { //是否字符串
         return Object.prototype.toString.call(o).slice(8, -1) === 'String'
     }
@@ -76,7 +75,26 @@ isFn 1.0.0 , 判断函数
     }
 
     function isInteger(obj) { //是不是整数
-        return typeof obj === 'number' && obj%1 === 0
+        try {
+          return typeof obj === 'number' && obj%1 === 0
+        } catch (e) {
+          return false
+        }
+    }
+
+
+
+    // 返回小数点后有几位
+    function getFloatN(n) {
+      try {
+        if(typeof n === "number"){
+          return Number.isSafeInteger(n) ? 0 : n.toString().split('.')[1].length
+        }else {
+          return false
+        }
+      } catch (e) {
+        return false
+      }
     }
 
 
@@ -126,6 +144,7 @@ isFn 1.0.0 , 判断函数
 
 
     window.fn = {
+        getFloatN,  //返回小数点后有几位
         isIdCard,   //判断是否为身份证号
         isPhoneNum, //判断是否为手机号
         isUrl,      //判断是否为URL地址
