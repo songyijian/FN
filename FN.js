@@ -221,8 +221,14 @@
     return ndata
   }
 
-
-
+  //xss 标签转译
+  function escapeHtml(str) {
+       if (/</g.test(str)){
+           str = str.replace(/</g, '&lt;');
+           str = str.replace(/>/g, '&gt;');
+       }
+       return str;
+  }
 
 
 

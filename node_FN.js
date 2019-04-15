@@ -44,9 +44,7 @@ class Argvs {
   argvsHas(k){
     return Object.is(this.argvsKeys().indexOf(k), -1) ? false : true;
   }
-
 }
-
 
 
 
@@ -65,4 +63,22 @@ function getIPAdress() {
             }
         }
     }
+}
+
+
+
+/**
+获取用户的ip
+@return {str } ::ffff:10.130.148.222
+*/
+function getClientIp(req) {
+  var ip = req.headers['x-forwarded-for'] ||
+    req.ip ||
+    req.connection.remoteAddress ||
+    req.socket.remoteAddress ||
+    req.connection.socket.remoteAddress || '';
+  if (ip.split(',').length > 0) {
+    ip = ip.split(',')[0]
+  }
+  return ip
 }
