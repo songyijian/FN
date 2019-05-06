@@ -20,7 +20,6 @@ class Dates extends Date {
     super(...arg)
   }
 
-
   /**
    * @Description: 格式化
    * @param {*str} fmt 要格式成什么样
@@ -28,9 +27,6 @@ class Dates extends Date {
    * @case: 
    *  new Dates().format('yyyy-MM-dd') >"2019-05-06"
    *  new Dates().format('yyyy-MM-dd h:m:s.S') >"2019-05-06 15:12:58.763"
-   * ---
-   * @Author: yijian.song
-   * @Date: 2019-05-06 15:09:28
    */
   format(fmt = 'yyyy-MM-dd h:m:s.S') {
     var o = {
@@ -53,9 +49,6 @@ class Dates extends Date {
    * @Description: 判断闰年
    * @return: {bool} 
    * @case: new Dates().isLeapYear()  >false
-   * ---
-   * @Author: yijian.song
-   * @Date: 2019-05-06 17:23:49
    */
   isLeapYear() {
     var _year = this.getFullYear()
@@ -67,9 +60,6 @@ class Dates extends Date {
    * @return: {Number} 当前月多数天
    * @case: 
    *  new Dates().matchDay() >31
-   * ---
-   * @Author: yijian.song
-   * @Date: 2019-05-06 17:21:54
    */
   matchDay() {
     let m2day = this.isLeapYear() ? 29 : 28;
@@ -83,9 +73,6 @@ class Dates extends Date {
    * @return: {arr} [{}]
    * @case: 
    *  new Dates('2019-03-03').getCalendar() >[{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
-   * ---
-   * @Author: yijian.song
-   * @Date: 2019-05-06 17:20:03
    */
   getCalendar(formatStr = 'yyyy-MM-dd') {
     let _dn = this.matchDay()         //当前月多数天
@@ -109,9 +96,6 @@ class Dates extends Date {
    * @param {number} n 正式向前跳跃，负数向后跳跃 
    * @return: {Dates} 返回跳转后的datas对象 
    * @case: 
-   * ---
-   * @Author: yijian.song
-   * @Date: 2019-05-06 17:48:52
    */
   jumpDay(n) {
     let nowTN = this.getTime()
