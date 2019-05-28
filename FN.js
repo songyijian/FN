@@ -74,37 +74,12 @@
 
 
 
-    /**
-     ** yijian.song
-     * desc 清楚json里key=指定值的键值对，并返回处理后的json
-     * param {} json
-     * param [] rm_val
-     * return {}
-     * trimKey({a:'',b:1},[''])  //{b:1} 踢出了key=‘’
-     */
-    function trimKey(json,rm_val) {
-      let r_val = Array.isArray(rm_val) ? rm_val: [rm_val]
-      let key = Object.keys(json)
-      let val = Object.values(json)
-      let njson ={}
-      val.forEach((item,index)=>{
-          if(Object.prototype.toString.call(item).slice(8, -1) === 'Object'){
-             njson[key[index]] = trimKey(item,r_val)
-          }else {
-            if(r_val.indexOf(item)<0){
-              njson[key[index]] = item
-            }
-          }
-      })
-      return njson
-    }
-
 
 
 
 
     /**
-     ** yijian.song
+     * yijian.song
      * desc 序列化成字符串
      * param {json}
      * return {string}
@@ -193,17 +168,6 @@
 
 
 
-  /*
-  拷贝
-    fn、date 对象不能被成功拷贝
-  */
-  export function jsonCopy(obj){
-      let _obj = JSON.stringify(obj),
-          objClone = JSON.parse(_obj);
-      return objClone
-  }
-
-
 
 
   /**
@@ -237,12 +201,9 @@
         trimKey,    //修剪掉制定key=值的key，key=‘’
         jsonToStr,  // json序列化，获取url参数 {}->str
         strToJson,  //序列化转json，str->{}
-
         templateFill,   //{}模版变量替换函数 {var}
         templateFill,   //{}模版变量替换函数 {var}
-
         goOverDay,      //获取几天前的  date对象
-
         digitUppercase, //现金额转大写
     }
 
