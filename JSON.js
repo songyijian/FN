@@ -17,15 +17,14 @@ export default function () {
     return objClone
   }
 
-/**
- * @Description: 删除指定键
- * @param {Array|obj} json
- * @param {Array|str} rmkey
- * @return: {Array|obj} 新对象
- * @case: JSON.delKey({ a: 2, b: 1 }, 'a') //{b: 1}
- *        JSON.delKey({a:2,b:1},['a','b']) //{}
- */
-  
+  /**
+   * @Description: 删除指定键
+   * @param {Array|obj} json
+   * @param {Array|str} rmkey
+   * @return: {Array|obj} 新对象
+   * @case: JSON.delKey({ a: 2, b: 1 }, 'a') //{b: 1}
+   *        JSON.delKey({a:2,b:1},['a','b']) //{}
+   */
   JSON.delKey = function delKey(json, rmkey) {
     let _rkey = Array.isArray(rmkey) ? rmkey : [rmkey]
     let _obj = JSON.copy(json)
@@ -42,7 +41,7 @@ export default function () {
    * @return: {Array|obj} 新对象
    * @case: delByValue({a:'',b:1},[''])  //{b:1} 踢出key=‘’
    */
-  JSON.delByValue = function delByValue(json, rmval) {
+  JSON.delByVal = function delByValue(json, rmval) {
     let r_val = Array.isArray(rmval) ? rmval : [rmval]
     let key = Object.keys(json)
     let val = Object.values(json)
@@ -58,6 +57,5 @@ export default function () {
     })
     return njson
   }
-
 
 }
