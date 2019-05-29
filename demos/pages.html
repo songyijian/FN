@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="../js/Pages.js"></script>
+  <title>Document</title>
+  <style>
+    .nextPage{ border: 1px solid red}
+    .prevPage{border: 1px solid red}
+    .tcdNumber{display:inline-block; margin: 0 1rem}
+    .current{ color: red; margin: 0 1rem}
+    .disabled{ margin: 0 1rem}
+    
+  </style>
+</head>
+<body>
+  <div id="div2"> </div>
+  <span onclick="update()">update</span>
+  <script>
+    var pg = new Pages( document.getElementById('div2'),
+      {
+        pageCount:50,
+        current:1,
+        changeFn:function(p){
+          console.log("回调："+p);
+        }
+      }
+    );
+    function update(){
+      alert(1)
+      pg.update({ pageCount: 30,})
+    }
+  </script>
+  
+</body>
+</html>

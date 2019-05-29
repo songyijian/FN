@@ -26,9 +26,12 @@ export default function () {
    *        JSON.delKey({a:2,b:1},['a','b']) //{}
    */
   JSON.delKey = function delKey(json, rmkey) {
-    let _rkey = Array.isArray(rmkey) ? rmkey : [rmkey]
+    if (typeof json !== 'object' || !json) {
+      return json
+    }
+    let _rmkey = arguments.length < 2 ? [] : Array.isArray(rmkey) ? rmkey : [rmkey]
     let _obj = JSON.copy(json)
-    _rkey.forEach(_key => {
+    _rmkey.forEach(_key => {
       delete _obj[_key]
     })
     return _obj
@@ -42,15 +45,18 @@ export default function () {
    * @case: delByValue({a:'',b:1},[''])  //{b:1} 踢出key=‘’
    */
   JSON.delByVal = function delByValue(json, rmval) {
-    let r_val = Array.isArray(rmval) ? rmval : [rmval]
+    if (typeof json !== 'object' || !json) {
+      return json
+    }
+    let _rmval = arguments.length < 2 ? [] : Array.isArray(rmval) ? rmval : [rmval]
     let key = Object.keys(json)
     let val = Object.values(json)
     let njson = {}
     val.forEach((item, index) => {
       if (Object.prototype.toString.call(item).slice(8, -1) === 'Object') {
-        njson[key[index]] = delByValue(item, r_val)
+        njson[key[index]] = delByValue(item, _rmval)
       } else {
-        if (r_val.indexOf(item) < 0) {
+        if (_rmval.indexOf(item) < 0) {
           njson[key[index]] = item
         }
       }
