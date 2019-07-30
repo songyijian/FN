@@ -1,94 +1,95 @@
 /*
-isFn 1.0.0 , 数据类型验证
-作者：songyijian
-发布：2018.07.12
-*/
-
+ * @Description: 数据类型验证函数集合
+ * @Author: songyijian
+ * @Date: 2019-07-15 14:00:39
+ * @LastEditTime: 2019-07-15 14:06:44
+ * @LastEditors: Please set LastEditors
+ */
 
 module.exports = {
     //是否字符串
-    isString(o) { 
+    isString(o) {
         return Object.prototype.toString.call(o).slice(8, -1) === 'String'
     },
 
     //是否数字
-    isNumber(o) { 
+    isNumber(o) {
         return Object.prototype.toString.call(o).slice(8, -1) === 'Number'
     },
 
     //是否boolean
-    isBoolean(o) { 
+    isBoolean(o) {
         return Object.prototype.toString.call(o).slice(8, -1) === 'Boolean'
     },
 
     //是否函数
-    isFunction(o) { 
+    isFunction(o) {
         return Object.prototype.toString.call(o).slice(8, -1) === 'Function'
     },
 
     //是否为null
-    isNull(o) { 
+    isNull(o) {
         return Object.prototype.toString.call(o).slice(8, -1) === 'Null'
     },
 
     //是否undefined
-    isUndefined(o) { 
+    isUndefined(o) {
         return Object.prototype.toString.call(o).slice(8, -1) === 'Undefined'
     },
 
     //是否对象
-    isObj(o) { 
+    isObj(o) {
         return Object.prototype.toString.call(o).slice(8, -1) === 'Object'
     },
 
     //是否数组
-    isArray(o) { 
+    isArray(o) {
         return Object.prototype.toString.call(o).slice(8, -1) === 'Array'
     },
 
     //是否时间
-    isDate(o) { 
+    isDate(o) {
         return Object.prototype.toString.call(o).slice(8, -1) === 'Date'
     },
 
     //是否正则
-    isRegExp(o) { 
+    isRegExp(o) {
         return Object.prototype.toString.call(o).slice(8, -1) === 'RegExp'
     },
 
     //是否错误对象
-    isError(o) { 
+    isError(o) {
         return Object.prototype.toString.call(o).slice(8, -1) === 'Error'
     },
 
     //是否Symbol函数
-    isSymbol(o) { 
+    isSymbol(o) {
         return Object.prototype.toString.call(o).slice(8, -1) === 'Symbol'
     },
 
     //是否Promise对象
-    isPromise(o) { 
+    isPromise(o) {
         return Object.prototype.toString.call(o).slice(8, -1) === 'Promise'
     },
 
     //是否Set对象
-    isSet(o) { 
+    isSet(o) {
         return Object.prototype.toString.call(o).slice(8, -1) === 'Set'
     },
 
     //是不是 false
-    isFalse(o) { 
+    isFalse(o) {
         if (!o || o === 'null' || o === 'undefined' || o === 'false' || o === 'NaN') return true
         return false
     },
 
     //是不是true
-    isTrue(o) { 
+    isTrue(o) {
         return !this.isFalse(o)
     },
 
     //是不是整数
-    isInteger(o) { 
+    isInteger(o) {
         try {
             return typeof o === 'number' && o % 1 === 0
         } catch (e) {
@@ -115,5 +116,4 @@ module.exports = {
     isContainCN(str) {
         return !(escape(str).indexOf("%u") < 0)
     },
-
 }
