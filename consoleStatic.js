@@ -1,6 +1,6 @@
 /*
  * @Description:
-                consoleSatatic
+                consoleStatic
                 console上的一些拓展方法，辅助开发在控制台输出一些信息（用完删掉别出现在线上环境）
  * @Author:  yijian.song
  * @Date: 2019-07-12 15:02:03

@@ -1,6 +1,12 @@
 
 /**
  * @Description: 对Date做了一些列扩展
+ *
+ *   new Date().format('yyyy-MM-dd h:m:s.S') >"2019-05-06 15:12:58.763"
+ *   new Date().isLeapYear()  >false
+ *   new Date('2019-03-03').getCalendar() >[{…}, {…}
+ *   new Date.jumpDay() >获取几天前的data对象
+ *   Date.nodeDayList('2019-03-10','2019-03-03')>[]
  * ---
  * @Author: yijian.song
  * @Date: 2019-05-06 15:06:50
@@ -11,7 +17,7 @@ export default function(){
    * @Description: 格式化
    * @param {*str} fmt 要格式成什么样
    * @return: {string} 格式化的样子
-   * @case: 
+   * @case:
    *  new Date().format('yyyy-MM-dd') >"2019-05-06"
    *  new Date().format('yyyy-MM-dd h:m:s.S') >"2019-05-06 15:12:58.763"
    */
@@ -41,6 +47,7 @@ export default function(){
     var _year = this.getFullYear()
     return (_year % 400 === 0 || (_year % 4 === 0 && _year % 100 !== 0))
   }
+
   /**
     * @Description: 当前月多数天
     * @return: {Number} 当前月多数天
@@ -77,7 +84,7 @@ export default function(){
   }
 
   /**
-   * @Description: 获取七天前的datas对象
+   * @Description: 获取n天前后的data对象
    * @param {number} n 正式向前跳跃，负数向后跳跃
    * @return: {Date} 返回跳转后的datas对象
    * @case:
@@ -86,4 +93,35 @@ export default function(){
     let nowTN = this.getTime()
     return new Date((n !== undefined && typeof n === "number") ? nowTN + (86400000 * n) : nowTN)
   }
+
+  /**
+   * @Description: 返回两个时间点之间的天列表
+   * @param {new Date(str|...)} star 起点
+   * @param {new Date(str|...)} end 终点
+   * @return: {arr}
+   * @case:
+   *  Date.nodeDayList('2019-03-10','2019-03-03')>[]
+  * ---
+   * @Author: yijian.song
+   * @Date: 2019-05-06 20:36:14
+   */
+  Date.nodeDayList = function nodeDayList(star,end) {
+    try{
+      var unixDb = new Date(star).getTime();
+      var unixDe = new Date(end).getTime();
+      var mx = Math.max(unixDb, unixDe)
+      var min = Math.min(unixDb, unixDe)
+      var arrtimelist = []
+      var k = min
+      for (; k <= mx; ) {
+        arrtimelist.push(new Date(parseInt(k)))
+        k += 86400000
+      }
+      return arrtimelist
+    }catch(err){
+      new Error(err)
+    }
+  }
+
+
 }

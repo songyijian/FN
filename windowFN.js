@@ -1,32 +1,56 @@
-
-
 /*
-  cssSupports 判断当前浏览器是否支持css属性
-  cssSupports('font') //true
-  // 错误值会挂掉
-*/
-var cssSupports = (function() {
-	var div = document.createElement('div'),
-		vendors = 'Khtml O Moz Webkit'.split(' '),
-		len = vendors.length;
-	return function(prop) {
-		if ( prop in div.style ) return true;
-		if ('-ms-' + prop in div.style) return true;
-		prop = prop.replace(/^[a-z]/, function(val) {
-			return val.toUpperCase();
-		});
-    // 这里不合理
-		while(len--) {
-			if ( vendors[len] + prop in div.style ) {
-			return true;
-		}
-	}
-		return false;
-	};
-})();
+ * @Author: 关于dom、css、浏览器
+ * @Date: 2018-10-12 20:20:41
+ * @LastEditTime: 2019-08-14 19:49:34
+ * @LastEditors: Please set LastEditors
+ */
 
 
-// 3.3 setCookie
+ 
+/**
+ * @Description: 检查浏览器是否支持CSS
+ * @param attribute
+ * @param value
+ * @return {Boolean}
+ *  https://developer.mozilla.org/zh-CN/docs/Web/API/CSS/supports
+ *  https://zhuanlan.zhihu.com/p/29488264
+ */
+export const supportsCSS = (attribute, value) => {
+    if (window.CSS && window.CSS.supportsCSS) {
+        if (typeof value === 'undefined') return window.CSS.supportsCSS(attribute)
+        return window.CSS.supportsCSS(attribute, value)
+    }
+    const elem = document.createElement('div')
+    if (attribute in elem.style) {
+        elem.style[attribute] = value
+        return elem.style[attribute] === value
+    }
+    return false
+}
+
+
+
+
+
+/**
+ * @Description: 获取dom对象的样式
+ * @param {*object} domObj 要查的dom对象
+ * @param {string | } attr string要获取的样式属性，空
+ * @return: {string | json}  attr_返回string，空_返回样式对象
+ */
+function getStyle(domObj, attr) {
+    if (domObj.currentStyle) {
+        return attr ? domObj.currentStyle[attr] : domObj.currentStyle
+    } else {
+        return attr ? getComputedStyle(domObj, false)[attr] : getComputedStyle(domObj, false)
+    }
+}
+
+
+
+
+
+
 /**
  * desc  设置Cookie
  * param {String} name
@@ -40,9 +64,8 @@ function setCookie(name, value, days) {
 }
 
 
-// 3.1 getCookie
 /**
- * desc 根据name读取cookie
+ * desc 读取cookie
  * param  {String} name
  * return {String}
  */
@@ -59,12 +82,10 @@ function getCookie(name) {
 
 
 
-// 3.2 removeCookie
 /**
- * desc 根据name删除cookie
+ * desc     删除cookie
  * param  {String} name
  */
-// var setCookie = require('./setCookie');
 function removeCookie(name) {
     // 设置已过期，系统会立刻删除cookie
     setCookie(name, '1', -1)
