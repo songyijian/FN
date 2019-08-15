@@ -13,8 +13,13 @@
   cutStr            //按照字节长度取字符串
   trimRegion        //干掉URL的origin
   escapeHtml        //html尖括号转译
-  getStyle          //获取dom对象的样式
   templateFill      //模版替换函数 {var}
+  URLParams         //url参数序列化和反序列化
+
+
+
+  Random ---------
+    randomNum     //生成指定范围随机数
 ```
 
 ### isFN.js 工作中常用方法整理
@@ -43,6 +48,7 @@
   isIdCard        //是否为身份证号
   isPhoneNum      //是否为手机号
   isUrl           //是否为URL地址
+
 ```
 
 ### nodeFN.js Node业务常用方法

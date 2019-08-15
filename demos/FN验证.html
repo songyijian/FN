@@ -15,11 +15,9 @@
 <body>
 <style>
 #app>div{ border: 1px solid #ccc; padding: 1rem; margin:1rem;}
-
-#getStyle{ position: relative; height: 300px; }
-#getStyle>p{ position: absolute; left: 5rem; top: 3rem; height: 100px; width: 50px; border: 2px solid red;  background: yellow; padding: 1rem; }
-
+#app>div>p{background-color: #ccc; line-height: 150%}
 </style>
+
 <div id="app">
     <h1>getImgSize</h1>
     <div id="imgbox">
@@ -55,12 +53,16 @@
     </div>
 
 
-    <h1>getStyle</h1>
-    <div id="getStyle">
-        <p id="getStyleDom" > </p>
+    <h1>URLParams</h1>
+    <div id="URLParams">
+        <p>
+          URLParams({a:'trtfds',b:123456})
+          <br/>
+          URLParams("demos/FN验证.html?q=searchParams&topic=api")
+        </p>
         <div></div>
     </div>
-    
+
 </div>
 
 
@@ -72,7 +74,6 @@
         )
     }
     asyncCall()
-
 
 
     $('#cutStr>div').html(
@@ -87,14 +88,21 @@
     )
 
 
-
-    $('#getStyle>div').text(
-        JSON.stringify(
-            getStyle($("#getStyleDom")[0],'top')
-        )
+    $('#URLParams>div').html(
+      `
+        ${URLParams({a:'trtfds',b:123456})}
+        <br/>
+        ${
+          JSON.stringify(
+            URLParams("demos/FN验证.html?q=searchParams&topic=api")
+          )
+        }
+      `
     )
+
+
+
 
 </script>
 </body>
 </html>
-                    
