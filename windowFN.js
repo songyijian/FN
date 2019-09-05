@@ -6,7 +6,7 @@
  */
 
 
- 
+
 /**
  * @Description: 检查浏览器是否支持CSS
  * @param attribute
@@ -89,4 +89,68 @@ function getCookie(name) {
 function removeCookie(name) {
     // 设置已过期，系统会立刻删除cookie
     setCookie(name, '1', -1)
+}
+
+
+
+
+
+
+/*
+获取设备的系统信息
+  getOsData() > {os:'ios',n:'8.0.3'}
+  getOsData() > {os:'Android',n:'8.0.3'}
+*/
+function getOsData() {
+  var _nav = navigator.userAgent;
+  var ver;
+  if (_nav.indexOf('Android') > 0) {
+    var bdArry = _nav.split(';');
+    ver = { os: 'Android', n: '' };
+    for (var i = bdArry.length - 1; i >= 0; i--) {
+      if (!(bdArry[i].indexOf('Android') < 0)) {
+        ver.n = bdArry[i].substr(9);
+        break;
+      }
+    }
+  } else {
+    var bdArry = _nav.split('OS');
+    ver = { os: 'ios', n: '' };
+    for (var i = bdArry.length - 1; i >= 0; i--) {
+      if (!(bdArry[i].indexOf('like Mac') < 0)) {
+        ver.n = bdArry[i].split(' ')[1].split('_').join('.');
+        break;
+      }
+    }
+  }
+  return ver
+}
+
+
+
+
+
+// 异常捕获
+try {
+  window.addEventListener('error', function (evt) {
+    if ('message' in evt) {
+      var smessage = {
+        "type": 'windCodeErr',
+        "errMsg": evt.message + '\n lineno:' + evt.lineno + '\n colno:' + evt.colno,
+        "source": evt.source,
+        "timeStamp": evt.timeStamp,
+      }
+      dc.log(smessage)
+    } else {
+      var smessage = {
+        "type": 'windLoadErr',
+        "errMsg": evt.target.outerHTML,
+        "timeStamp": evt.timeStamp,
+      }
+      dc.log(smessage)
+    }
+    return false
+  }, true)
+} catch (error) {
+  console.log(error)
 }

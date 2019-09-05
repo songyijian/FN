@@ -185,7 +185,6 @@ function URLParams(o){
       url = o.split('?')[1]
     }
     return JSON.parse('{"' + decodeURIComponent(url).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
-
   }else if(Object.prototype.toString.call(o).slice(8, -1) === 'Object'){
     if (!o) return '';
     let pairs = [];

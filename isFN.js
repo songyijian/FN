@@ -78,6 +78,11 @@
     return Object.prototype.toString.call(o).slice(8, -1) === 'Set'
   }
 
+  //是否Map对象
+  function isMap(o) {
+    return Object.prototype.toString.call(o).slice(8, -1) === 'Map'
+  }
+
   //是不是 false
   function isFalse(o) {
     if (!o || o === 'null' || o === 'undefined' || o === 'false' || o === 'NaN') return true
