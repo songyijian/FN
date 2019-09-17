@@ -1,7 +1,7 @@
 /*
  * @Author: 关于浏览器端 window、dom、css等常用方法整理
  * @Date: 2018-10-12 20:20:41
- * @LastEditTime: 2019-09-17 16:54:25
+ * @LastEditTime: 2019-09-17 19:39:20
  * @LastEditors: Please set LastEditors
  */
 
@@ -242,7 +242,7 @@ function getVideoSize(src, fn) {
   v.setAttribute('x-webkit-airplay', "true");
   v.setAttribute('x5-video-player-type', "true");
   v.setAttribute('preload', "auto");
-  v.setAttribute('muted', "false");
+  v.setAttribute('muted', true);
   v.addEventListener('canplay', function () {
     v.pause();
     v = null;
