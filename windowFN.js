@@ -1,7 +1,7 @@
 /*
  * @Author: 关于浏览器端 window、dom、css等常用方法整理
  * @Date: 2018-10-12 20:20:41
- * @LastEditTime: 2019-09-17 16:03:36
+ * @LastEditTime: 2019-09-17 16:54:25
  * @LastEditors: Please set LastEditors
  */
 
@@ -267,8 +267,20 @@ function getVideoSize(src, fn) {
     fn && fn(error)
   }, false);
   v.setAttribute("src", src);
-  v.play && v.play();
+  var playPromise = v.play();
+  if (playPromise !== undefined) {
+    playPromise.then(function () {
+    }).catch(function (error) {
+      fn && fn(error)
+    });
+  }
 }
+
+
+
+
+
+
 
 
 /**
