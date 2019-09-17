@@ -16,8 +16,6 @@
   templateFill      //模版替换函数 {var}
   URLParams         //url参数序列化和反序列化
 
-
-
   Random ---------
     randomNum     //生成指定范围随机数
 ```
@@ -58,12 +56,24 @@
 
 ### windowFN.js 关于dom、css、浏览器
 ```
+$   //简单dom选择器，querySelector的简单封装
+
+异常处理：
+  window.addEventListener('error',function(){},true)
+  //针对ios webview 的异常捕获方法
+  mediaErr        //媒体文件加载错误
+  codeCatchErr    //trycatch的错误回调
+
   supportsCSS   //检查浏览器是否支持CSS
   getStyle      //获取dom对象的样式
   setCookie      //设置Cookie
   getCookie      //读取cookie
-
   removeCookie    //删除cookie
+  getImgSize      //获取img的原本尺寸
+  getVideoSize    //获取视频的原本尺寸
+
+  setRem      //移动端根据适口处理rem逻辑，依赖getOsData函数
+  getOsData   //获取设备的系统信息
 ```
 
 
