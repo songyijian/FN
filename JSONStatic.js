@@ -13,9 +13,7 @@
 module.exports = function () {
 
   JSON.copy = function copy(obj) {
-    let _obj = JSON.stringify(obj);
-    _obj = JSON.parse(_obj);
-    return _obj
+    return JSON.parse(JSON.stringify(obj))
   }
 
   /**
@@ -69,7 +67,7 @@ module.exports = function () {
    * @Description: 合并对象，返回一个前拷贝对象
    * @param {arr | json} [],{},...
    * @return: {json} 浅拷贝对象
-   * @case: 
+   * @case:
    *  JSON.cat({A:1},{b:2},3,[1,2]) >{0: 1, 1: 2, A: 1, b: 2}
    */
   JSON.cat = function () {

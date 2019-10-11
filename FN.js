@@ -2,7 +2,7 @@
  * @Description: 工作中常用方法整理
  * @Author: yijian.song
  * @Date: 2018-10-12 20:20:41
- * @LastEditTime: 2019-08-14 19:44:28
+ * @LastEditTime: 2019-10-11 20:29:53
  * @LastEditors: Please set LastEditors
  *
  *  推荐 https://segmentfault.com/a/1190000011966867
@@ -219,4 +219,42 @@ function URLParams(o){
  */
 function randomNum(min, max) {
   return Math.floor(min + Math.random() * (max - min));
+}
+
+
+
+
+/**
+ * @Description: 版本比较方法函数
+ * @param {string} a  '2.1.0'
+ * @param {string} f  比较符合 "=" | ">" | "<"  
+ * @param {string} b '10.1.0'
+ * @return: {bool} true |false
+ * @Author: yijian.song
+ * @Version: 3.0.0
+ * @LastEditors: yijian.song
+ * @LastEditTime: 
+ * @Date: 2019-10-11 20:27:19
+ */
+function cprversion(a, f, b) {
+  if (arguments.length < 2) { return }
+  function toNum(a) {
+    var a = a.toString();
+    var c = a.split('.');
+    var num_place = ["", "0", "00", "000", "0000"], r = num_place.reverse();
+    for (var i = 0; i < c.length; i++) {
+      var len = c[i].length;
+      c[i] = r[len] + c[i];
+    }
+    var res = c.join('');
+    return res;
+  }
+
+  if (typeof f !== "undefined" && (f === "<" || f === ">" || f === "=")) {
+    if (f === "=") { return toNum(a) === toNum(b); }
+    if (f === ">") { return toNum(a) > toNum(b); }
+    if (f === "<") { return toNum(a) < toNum(b); }
+  } else {
+    return toNum(a) > toNum(b);
+  }
 }

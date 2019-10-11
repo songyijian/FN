@@ -2,107 +2,107 @@
 * @Description: 数据类型验证函数集合
 * @Author: songyijian
 * @Date: 2019-07-15 14:00:39
-* @LastEditTime: 2019-07-15 14:06:44
-* @LastEditors: Please set LastEditors
+ * @LastEditTime: 2019-10-11 20:26:46
+ * @LastEditors: Please set LastEditors
 */
 
 
 // 数据类型的验证 ==========================
   //是否字符串
   function isString(o) {
-    return Object.prototype.toString.call(o).slice(8, -1) === 'String'
+    return Object.prototype.toString.call(o).slice(8, -1) === "String"
   }
 
   //是否数字
   function isNumber(o) {
-    return Object.prototype.toString.call(o).slice(8, -1) === 'Number'
+    return Object.prototype.toString.call(o).slice(8, -1) === "Number"
   }
 
   //是否boolean
   function isBoolean(o) {
-    return Object.prototype.toString.call(o).slice(8, -1) === 'Boolean'
+    return Object.prototype.toString.call(o).slice(8, -1) === "Boolean"
   }
 
   //是否函数
   function isFunction(o) {
-    return Object.prototype.toString.call(o).slice(8, -1) === 'Function'
+    return Object.prototype.toString.call(o).slice(8, -1) === "Function"
   }
 
   //是否为null
   function isNull(o) {
-    return Object.prototype.toString.call(o).slice(8, -1) === 'Null'
+    return Object.prototype.toString.call(o).slice(8, -1) === "Null"
   }
 
   //是否undefined
   function isUndefined(o) {
-    return Object.prototype.toString.call(o).slice(8, -1) === 'Undefined'
+    return Object.prototype.toString.call(o).slice(8, -1) === "Undefined"
   }
 
   //是否对象
   function isObj(o) {
-    return Object.prototype.toString.call(o).slice(8, -1) === 'Object'
+    return Object.prototype.toString.call(o).slice(8, -1) === "Object"
   }
 
   //是否数组
   function isArray(o) {
-    return Object.prototype.toString.call(o).slice(8, -1) === 'Array'
+    return Object.prototype.toString.call(o).slice(8, -1) === "Array"
   }
 
   //是否时间
   function isDate(o) {
-    return Object.prototype.toString.call(o).slice(8, -1) === 'Date'
+    return Object.prototype.toString.call(o).slice(8, -1) === "Date"
   }
 
   //是否正则
   function isRegExp(o) {
-    return Object.prototype.toString.call(o).slice(8, -1) === 'RegExp'
+    return Object.prototype.toString.call(o).slice(8, -1) === "RegExp"
   }
 
   //是否错误对象
   function isError(o) {
-    return Object.prototype.toString.call(o).slice(8, -1) === 'Error'
+    return Object.prototype.toString.call(o).slice(8, -1) === "Error"
   }
 
   //是否Symbol函数
   function isSymbol(o) {
-    return Object.prototype.toString.call(o).slice(8, -1) === 'Symbol'
+    return Object.prototype.toString.call(o).slice(8, -1) === "Symbol"
   }
 
   //是否Promise对象
   function isPromise(o) {
-    return Object.prototype.toString.call(o).slice(8, -1) === 'Promise'
+    return Object.prototype.toString.call(o).slice(8, -1) === "Promise"
   }
 
   //是否Set对象
   function isSet(o) {
-    return Object.prototype.toString.call(o).slice(8, -1) === 'Set'
+    return Object.prototype.toString.call(o).slice(8, -1) === "Set"
   }
 
   //是否Map对象
   function isMap(o) {
-    return Object.prototype.toString.call(o).slice(8, -1) === 'Map'
+    return Object.prototype.toString.call(o).slice(8, -1) === "Map"
   }
 
   //是不是 false
   function isFalse(o) {
-    if (!o || o === 'null' || o === 'undefined' || o === 'false' || o === 'NaN') return true
+    if (!o || o === "null" || o === "undefined" || o === "false" || o === "NaN") return true
     return false
   }
 
   //是不是true
   function isTrue(o) {
-    return !this.isFalse(o)
+    return !isFalse(o)
   }
 
   //是不是一个文件
   function isFile(o) {
-    return Object.prototype.toString.call(o).slice(8, -1) === 'File'
+    return Object.prototype.toString.call(o).slice(8, -1) === "File"
   }
 
   //是不是整数
   function isInteger(o) {
     try {
-      return typeof o === 'number' && o % 1 === 0
+      return typeof o === "number" && o % 1 === 0
     } catch (e) {
       return false
     }
@@ -110,7 +110,7 @@
 
   // ArrayBuffer
   function isArrayBuffer(val) {
-    return Object.prototype.toString.call(val) === '[object ArrayBuffer]';
+    return Object.prototype.toString.call(val) === "[object ArrayBuffer]";
   }
 
 
