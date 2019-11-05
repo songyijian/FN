@@ -8,6 +8,12 @@
 
 
 // 数据类型的验证 ==========================
+
+  //类型判断 返回数据类型
+  function isType(o) {
+    return Object.prototype.toString.call(o).slice(8, -1)
+  }
+
   //是否字符串
   function isString(o) {
     return Object.prototype.toString.call(o).slice(8, -1) === "String"

@@ -12,6 +12,11 @@
 
 module.exports = function () {
 
+  function isType(o) {
+    return Object.prototype.toString.call(o).slice(8, -1)
+  }
+
+
   JSON.copy = function copy(obj) {
     return JSON.parse(JSON.stringify(obj))
   }
@@ -36,7 +41,43 @@ module.exports = function () {
     return _obj
   }
 
+
+
   /**
+   * @Description: delKeys 深度遍历 删除指定键
+   * @param {Array|obj} json
+   * @param {Array|str} rmkey 'xx'| ['xx',0,1]
+   * @param {Boolean} depth=true true深度遍历（默认） | false只处理第一层
+   * @return: {Array|obj} 新对象
+   * @case: JSON.delKey({ a: 2, b: 1 }, 'a') //{b: 1}
+   *        JSON.delKey({a:2,b:1},['a','b']) //{}
+   */
+  JSON.delKeys = function delKeys(json, rmkey, depth) {
+    if ((isType(json) !== 'Object' && isType(json) !== 'Array') || typeof rmkey === 'undefined' ) return json;
+    let _rm = Array.isArray(rmkey) ? rmkey : [rmkey]
+    let _depth = typeof depth === 'undefined' ? true : Boolean(depth)
+    let n = JSON.copy(json)
+    _rm.forEach(rk => { delete n[rk]})
+    if(_depth){
+      for (var key in n) {
+        if (n.hasOwnProperty(key)) {
+          let item = n[key]
+          if((isType(item) === 'Object' || isType(item) === 'Array')){
+            n[key] = delKeys(item,rmkey, depth)
+          }
+        }
+      }
+    }
+    if(isType(json) === 'Array'){
+      return Object.values(n)
+    }else{
+      return n
+    }
+  }
+
+
+
+  /** 建议使用 delByVals更灵活
    * @Description: 删除key='指定值'的键，返回新对象
    * @param {Array|obj} json
    * @param {Array|str} rmval
@@ -63,6 +104,40 @@ module.exports = function () {
     return njson
   }
 
+
+  /**
+   * @Description: delByVals 深度遍历 删除key='指定值'的键，返回新对象
+   * @param {Array|obj} json
+   * @param {Array|str} rmval 'xx'| ['xx',0,1]
+   * @param {Boolean} depth=true true深度遍历（默认） | false只处理第一层
+   * @return: {Array|obj} 新对象
+   * @case: delByVals({a:'',b:1},[''])  //{b:1}踢出key=‘’
+   */
+  JSON.delByVals = function delByVals(json, rmval, depth) {
+    if ((isType(json) !== 'Object' && isType(json) !== 'Array') || typeof rmval === 'undefined') return json;
+    let _rm = Array.isArray(rmval) ? rmval : [rmval]
+    let _depth = typeof depth === 'undefined' ? true : Boolean(depth)
+    let n = {};
+    let keys = Object.keys(json)
+    let vals = Object.values(json)
+    vals.forEach((item, index) => {
+      if ((isType(item) === 'Object' || isType(item) === 'Array') && _depth) {
+        n[keys[index]] = delByVals(item, _rm, depth)
+      } else {
+        if (_rm.indexOf(item) < 0) {
+          n[keys[index]] = item
+        }
+      }
+    })
+
+    if (isType(json) === 'Array') {
+      return Object.values(n)
+    } else {
+      return n
+    }
+  }
+
+
   /**
    * @Description: 合并对象，返回一个前拷贝对象
    * @param {arr | json} [],{},...
@@ -79,5 +154,8 @@ module.exports = function () {
     }
     return _obj
   }
+
+
+
 
 }

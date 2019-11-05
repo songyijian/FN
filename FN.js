@@ -227,13 +227,13 @@ function randomNum(min, max) {
 /**
  * @Description: 版本比较方法函数
  * @param {string} a  '2.1.0'
- * @param {string} f  比较符合 "=" | ">" | "<"  
+ * @param {string} f  比较符合 "=" | ">" | "<"
  * @param {string} b '10.1.0'
  * @return: {bool} true |false
  * @Author: yijian.song
  * @Version: 3.0.0
  * @LastEditors: yijian.song
- * @LastEditTime: 
+ * @LastEditTime:
  * @Date: 2019-10-11 20:27:19
  */
 function cprversion(a, f, b) {
@@ -257,4 +257,75 @@ function cprversion(a, f, b) {
   } else {
     return toNum(a) > toNum(b);
   }
+}
+
+
+
+
+
+/**
+ * @Description: 数组差集函数
+ * @param {Array} a 要过滤的数组a
+ * @param {Array} b 要过滤的数组b
+ * @param {undefind | string | Function} fkey undefind简单元素可以不传 | string元素对象的比对key | Function接受一个函数回调
+ * @return: {Array} 返回过滤后【】
+ * @Author: yijian.song
+ * @Version: 2.7.1
+ * @Date: 2019-10-29 15:08:55
+ * @LastEditors: yijian.song
+ * @LastEditTime:
+ */
+
+export function difference(a, b, fkey) {
+  function isType(o) {
+    return Object.prototype.toString.call(o).slice(8, -1)
+  }
+  function isArray(o) {
+    return Object.prototype.toString.call(o).slice(8, -1) === "Array"
+  }
+  if (!isArray(a) || !isArray(b)){
+    throw '对象不是array'
+    return []
+  }
+
+  if (a.length == 0 || b.length == 0 ){
+    return a.concat(b)
+  }
+
+  let r = []
+  switch (isType(fkey)) {
+    case "Undefined":
+      a.forEach(item => {
+        !b.some(as => as === item) && r.push(item)
+      })
+      b.forEach(item => {
+        !a.some(as => as === item) && r.push(item)
+      })
+      break;
+
+    case "String":
+      a.forEach(item => {
+        let i = item[fkey]
+        !b.some(as => as[fkey] === i) && r.push(item)
+      })
+      b.forEach(item => {
+        let i = item[fkey]
+        !a.some(as => as[fkey] === i) && r.push(item)
+      })
+      break;
+
+    case "Function":
+      a.forEach(item => {
+        !b.some(as => !fkey(as, item)) && r.push(item)
+      })
+      b.forEach(item => {
+        !a.some(as => !fkey(as, item)) && r.push(item)
+      })
+      break;
+
+    default:
+      throw 'fkey 参数格式错误'
+  }
+
+  return r
 }
