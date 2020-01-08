@@ -2,7 +2,7 @@
  * @Description: 工作中常用方法整理
  * @Author: yijian.song
  * @Date: 2018-10-12 20:20:41
- * @LastEditTime: 2019-10-11 20:29:53
+ * @LastEditTime: 2019-11-12 11:25:46
  * @LastEditors: Please set LastEditors
  *
  *  推荐 https://segmentfault.com/a/1190000011966867
@@ -276,7 +276,7 @@ function cprversion(a, f, b) {
  * @LastEditTime:
  */
 
-export function difference(a, b, fkey) {
+function difference(a, b, fkey) {
   function isType(o) {
     return Object.prototype.toString.call(o).slice(8, -1)
   }
@@ -329,3 +329,7 @@ export function difference(a, b, fkey) {
 
   return r
 }
+
+
+
+// export 

@@ -19,18 +19,7 @@ function RepeatBit(arr, val, keep = 3) {
   if (!Array.isArray(arr)) { return Error('参数必须是合法数组') }
   if (typeof val === 'undefined') { return Error('重复参考样本不能为空') }
   var start = arr.length + 1,
-      m = [],
-      setState = function (index) {
-        if (index - start >= keep) {
-          m.push({
-            val: val,
-            length: index - start,
-            start: start,
-            end: (index - 1)
-          })
-        }
-        start = arr.length + 1
-      };
+      m = [];
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] == val) {
       if (start > i)start = i;
