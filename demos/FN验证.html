@@ -10,6 +10,8 @@
     <meta name="renderer" content="webkit">
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
     <script src="../FN.js"></script>
+    <!-- <script src="../JSONStatic.js"></script> -->
+
     <title></title>
 </head>
 <body>
@@ -67,38 +69,134 @@
 
 
 <script>
-    async function asyncCall() {
-        var data = await getImgSize('http://pic25.nipic.com/20121112/9252150_150552938000_2.jpg')
-        $('#imgbox>div').html(
-            JSON.stringify(data)
-        )
+
+  // import JSONStatic from 'JSONStatic.js'
+
+  // JSONStatic()
+    //
+    // async function asyncCall() {
+    //     var data = await getImgSize('http://pic25.nipic.com/20121112/9252150_150552938000_2.jpg')
+    //     $('#imgbox>div').html(
+    //         JSON.stringify(data)
+    //     )
+    // }
+    // asyncCall()
+    //
+    //
+    // $('#cutStr>div').html(
+    //     cutStr('123abc七八九',9)
+    // )
+    //
+    //
+    // $('#jsonToArray>div').html(
+    //     JSON.stringify(
+    //         jsonToArray({ '6000': "商务", '6001': "天气" })
+    //     )
+    // )
+    //
+    //
+    // $('#URLParams>div').html(
+    //   `
+    //     ${URLParams({a:'trtfds',b:123456})}
+    //     <br/>
+    //     ${
+    //       JSON.stringify(
+    //         URLParams("demos/FN验证.html?q=searchParams&topic=api")
+    //       )
+    //     }
+    //   `
+    // )
+    //
+
+    function isType(o) {
+      return Object.prototype.toString.call(o).slice(8, -1)
     }
-    asyncCall()
 
-
-    $('#cutStr>div').html(
-        cutStr('123abc七八九',9)
-    )
-
-
-    $('#jsonToArray>div').html(
-        JSON.stringify(
-            jsonToArray({ '6000': "商务", '6001': "天气" })
-        )
-    )
-
-
-    $('#URLParams>div').html(
-      `
-        ${URLParams({a:'trtfds',b:123456})}
-        <br/>
-        ${
-          JSON.stringify(
-            URLParams("demos/FN验证.html?q=searchParams&topic=api")
-          )
+    /**
+     * [对象内容比较函数]
+     * @param  {[Object]} dataA [样本对象]
+     * @param  {[Object]} dataB [比较对象]
+     * @return {[Boolean]}       [内容是否相等]
+     * compare({a:1,b:{c:2,q:1}},{b:{q:1,c:2},a:1}) > true
+     */
+    function compare(dataA, dataB){
+      if(isType(dataA) !== isType(dataB)) return false;
+      if(Object.keys(dataA).length !== Object.keys(dataB).length) return false;
+      for(let k in dataA){
+        if(isType(dataA[k]) === 'Object'){
+          if(
+            !(isType(dataB[k]) === 'Object')
+            || false === compare(dataA[k], dataB[k])
+          ) return false;
+        }else{
+          if(dataB[k] !== dataA[k]) return false;
         }
-      `
-    )
+      }
+      return true;
+    }
+
+    /**
+     * [delByVals 删除对象内val复核样本的属性]
+     * @param  {[json]} json  [操作对象]
+     * @param  {[array|str]} rmval [样本] > 'xx'| ['xx',0,1]
+     * @param  {[Boolean]} depth [false只处理第一层（默认） | true深度遍历 ]
+     * @return {[json]}       [处理后的json]
+     *
+     *   JSON.delByVals({ a:1, b:{c:2,q:1}, x:[0,1], d:[], e:undefined, f:''},[1,undefined,[],{c:2,q:1}],false) >{x: [0, 1], f: ""}
+     *   JSON.delByVals({ a:1, b:{c:2,q:1}, x:[0,1], d:[], e:undefined, f:''},[1,undefined,[],{c:2,q:1}],true) >{x:[0], f: ""}
+     */
+    JSON.delByVals = function delByVals(json, rmval, depth) {
+      if ((isType(json) !== 'Object' && isType(json) !== 'Array') || typeof rmval === 'undefined') return json;
+      let _rm = Array.isArray(rmval) ? rmval : [rmval]
+      let _depth = typeof depth === 'undefined' ? false : Boolean(depth)
+      let n = {};
+      let keys = Object.keys(json);
+      let vals = Object.values(json);
+      let _rmObj =[],_rmBasic =[];
+      _rm.forEach(item=>{
+        isType(item) === 'Object' || isType(item) === 'Array' ? _rmObj.push(item) : _rmBasic.push(item)
+      })
+      vals.forEach((item, index) => {
+        if (isType(item) === 'Object' || isType(item) === 'Array') {
+          !_rmObj.some(element => compare(item,element)) && (n[keys[index]] = _depth ? delByVals(item, _rm, depth) : item)
+        } else {
+          _rmBasic.indexOf(item) < 0 && (n[keys[index]] = item)
+        }
+      })
+      if (isType(json) === 'Array') {
+        return Object.values(n)
+      } else {
+        return n
+      }
+    }
+
+
+
+console.log(
+  JSON.delByVals({
+    a:1,
+    b:{c:2,q:1},
+    x:[0,1],
+    d:[],
+    e:undefined,
+    f:''
+  },[1,undefined,[],{c:2,q:1}]),
+
+  JSON.delByVals({
+    a:1,
+    b:{c:2,q:1},
+    x:[0,1],
+    d:[],
+    e:undefined,
+    f:''
+  },[1,undefined,[],{c:2,q:1}],true),
+
+)
+
+
+
+
+
 
 
 

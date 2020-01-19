@@ -10,10 +10,38 @@
  * @Date: 2019-05-06 15:06:50
  */
 
-module.exports = function () {
+export default function () {
 
+  /**
+  * [类型函数]
+  * @type {*}
+  * @return {[str]}       [Object|...]
+  */
   function isType(o) {
     return Object.prototype.toString.call(o).slice(8, -1)
+  }
+
+  /**
+   * [对象内容比较函数]
+   * @param  {[Object]} dataA [样本对象]
+   * @param  {[Object]} dataB [比较对象]
+   * @return {[Boolean]}       [内容是否相等]
+   * compare({a:1,b:{c:2,q:1}},{b:{q:1,c:2},a:1}) > true
+   */
+  function compare(dataA, dataB){
+    if(isType(dataA) !== isType(dataB)) return false;
+    if(Object.keys(dataA).length !== Object.keys(dataB).length) return false;
+    for(let k in dataA){
+      if(isType(dataA[k]) === 'Object'){
+        if(
+          !(isType(dataB[k]) === 'Object')
+          || false === compare(dataA[k], dataB[k])
+        ) return false;
+      }else{
+        if(dataB[k] !== dataA[k]) return false;
+      }
+    }
+    return true;
   }
 
 
@@ -106,30 +134,33 @@ module.exports = function () {
 
 
   /**
-   * @Description: delByVals 深度遍历 删除key='指定值'的键，返回新对象
-   * @param {Array|obj} json
-   * @param {Array|str} rmval 'xx'| ['xx',0,1]
-   * @param {Boolean} depth=true true深度遍历（默认） | false只处理第一层
-   * @return: {Array|obj} 新对象
-   * @case: delByVals({a:'',b:1},[''])  //{b:1}踢出key=‘’
+   * [delByVals 删除对象内val复核样本的属性]
+   * @param  {[json]} json  [操作对象]
+   * @param  {[array|str]} rmval [样本] > 'xx'| ['xx',0,1]
+   * @param  {[Boolean]} depth [false只处理第一层（默认） | true深度遍历 ]
+   * @return {[json]}       [处理后的json]
+   *
+   *   JSON.delByVals({ a:1, b:{c:2,q:1}, x:[0,1], d:[], e:undefined, f:''},[1,undefined,[],{c:2,q:1}],false) >{x: [0, 1], f: ""}
+   *   JSON.delByVals({ a:1, b:{c:2,q:1}, x:[0,1], d:[], e:undefined, f:''},[1,undefined,[],{c:2,q:1}],true) >{x:[0], f: ""}
    */
   JSON.delByVals = function delByVals(json, rmval, depth) {
     if ((isType(json) !== 'Object' && isType(json) !== 'Array') || typeof rmval === 'undefined') return json;
     let _rm = Array.isArray(rmval) ? rmval : [rmval]
-    let _depth = typeof depth === 'undefined' ? true : Boolean(depth)
+    let _depth = typeof depth === 'undefined' ? false : Boolean(depth)
     let n = {};
-    let keys = Object.keys(json)
-    let vals = Object.values(json)
+    let keys = Object.keys(json);
+    let vals = Object.values(json);
+    let _rmObj =[],_rmBasic =[];
+    _rm.forEach(item=>{
+      isType(item) === 'Object' || isType(item) === 'Array' ? _rmObj.push(item) : _rmBasic.push(item)
+    })
     vals.forEach((item, index) => {
-      if ((isType(item) === 'Object' || isType(item) === 'Array') && _depth) {
-        n[keys[index]] = delByVals(item, _rm, depth)
+      if (isType(item) === 'Object' || isType(item) === 'Array') {
+        !_rmObj.some(element => compare(item,element)) && (n[keys[index]] = _depth ? delByVals(item, _rm, depth) : item)
       } else {
-        if (_rm.indexOf(item) < 0) {
-          n[keys[index]] = item
-        }
+        _rmBasic.indexOf(item) < 0 && (n[keys[index]] = item)
       }
     })
-
     if (isType(json) === 'Array') {
       return Object.values(n)
     } else {
