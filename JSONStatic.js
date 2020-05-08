@@ -75,7 +75,7 @@ export default function () {
    * @Description: delKeys 深度遍历 删除指定键
    * @param {Array|obj} json
    * @param {Array|str} rmkey 'xx'| ['xx',0,1]
-   * @param {Boolean} depth=true true深度遍历（默认） | false只处理第一层
+   * @param {Boolean} depth=false只处理第一层（默认）| true深度遍历
    * @return: {Array|obj} 新对象
    * @case: JSON.delKey({ a: 2, b: 1 }, 'a') //{b: 1}
    *        JSON.delKey({a:2,b:1},['a','b']) //{}
@@ -83,7 +83,6 @@ export default function () {
   JSON.delKeys = function delKeys(json, rmkey, depth) {
     if ((isType(json) !== 'Object' && isType(json) !== 'Array') || typeof rmkey === 'undefined' ) return json;
     let _rm = Array.isArray(rmkey) ? rmkey : [rmkey]
-    let _depth = typeof depth === 'undefined' ? true : Boolean(depth)
     let n = JSON.copy(json)
     _rm.forEach(rk => { delete n[rk]})
     if(_depth){
@@ -103,34 +102,6 @@ export default function () {
     }
   }
 
-
-
-  /** 建议使用 delByVals更灵活
-   * @Description: 删除key='指定值'的键，返回新对象
-   * @param {Array|obj} json
-   * @param {Array|str} rmval
-   * @return: {Array|obj} 新对象
-   * @case: delByValue({a:'',b:1},[''])  //{b:1}踢出key=‘’
-   */
-  JSON.delByVal = function delByValue(json, rmval) {
-    if (typeof json !== 'object' || !json) {
-      return json
-    }
-    let _rmval = arguments.length < 2 ? [] : Array.isArray(rmval) ? rmval : [rmval]
-    let key = Object.keys(json)
-    let val = Object.values(json)
-    let njson = {}
-    val.forEach((item, index) => {
-      if (Object.prototype.toString.call(item).slice(8, -1) === 'Object') {
-        njson[key[index]] = delByValue(item, _rmval)
-      } else {
-        if (_rmval.indexOf(item) < 0) {
-          njson[key[index]] = item
-        }
-      }
-    })
-    return njson
-  }
 
 
   /**
