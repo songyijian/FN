@@ -1,23 +1,22 @@
 /*
- * @Description:
-                consoleStatic
-                console上的一些拓展方法，辅助开发在控制台输出一些信息（用完删掉别出现在线上环境）
- * @Author:  yijian.song
- * @Date: 2019-07-12 15:02:03
- * @LastEditTime: 2019-07-12 15:07:57
- * @LastEditors: Please set LastEditors
+ * @Description: consoleStatic console上的一些拓展方法
+ * @Author: yijian.song
+ * @Version: 3.1.2
+ * @Date: 2020-04-10 14:10:14
+ * @LastEditors: yijian.song
+ * @LastEditTime: 2020-05-08 12:10:11
  */
 
-module.exports = function () {
+export default function consoleStatic() {
   var console = window.console
   /**
    * @Description: 把json格式化输出到控制台
    * @param { json } obj 一个json对象
    * @return: {str} 格式的json对象
    * @Author: yijian.song
-   * @Date: 2019-07-12 15:02:47
+   * @Version: 3.1.2
+   * @Date: 2020-05-08 12:09:02
    */
-
   console.json = function (...obj) {
     let objs = []
     for (let i = 0; i < obj.length; i++) {
