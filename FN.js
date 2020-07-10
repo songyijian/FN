@@ -2,7 +2,7 @@
  * @Description: 工作中常用方法整理
  * @Author: yijian.song
  * @Date: 2018-10-12 20:20:41
- * @LastEditTime: 2020-07-10 19:40:07
+ * @LastEditTime: 2020-07-10 19:41:36
  * @LastEditors: yijian.song
  *
  *  推荐 https://segmentfault.com/a/1190000011966867
@@ -330,6 +330,19 @@ function difference(a, b, fkey) {
   return r
 }
 
+/**
+ * @Description: 一纬数组简易去重复
+ * @param {array} arr
+ * @return: {array} arr
+ * @Author: yijian.song
+ * @Version: 3.2.0
+ * @Date: 2020-07-09 17:50:47
+ * 
+ * unique ([1,2,'',2,1]) > [1, 2, ""]
+ */
+function unique (arr) {
+  return Array.from(new Set(arr))
+}
 
 /**
  * @Description: 将string中的id整理成数组，当前用\n分割
