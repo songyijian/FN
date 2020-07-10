@@ -2,8 +2,8 @@
  * @Description: 工作中常用方法整理
  * @Author: yijian.song
  * @Date: 2018-10-12 20:20:41
- * @LastEditTime: 2019-11-12 11:25:46
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-07-10 19:40:07
+ * @LastEditors: yijian.song
  *
  *  推荐 https://segmentfault.com/a/1190000011966867
  */
@@ -331,5 +331,26 @@ function difference(a, b, fkey) {
 }
 
 
-
-// export 
+/**
+ * @Description: 将string中的id整理成数组，当前用\n分割
+ * @param {str} 一堆用\n分割的id字符串
+ * @return: {array} 【id】
+ * @Author: yijian.song
+ * @Version: 3.2.0
+ * @Date: 2020-07-09 18:38:19
+ * 
+ * strToIdlist(`
+ * 1 we
+ * dd
+ * 
+ * f33
+ * `)
+ *  > ['1we','dd','f33']
+ */
+function strToIdlist(str){
+  var places = []
+  unique(str.split('\n')).forEach(a => {
+    var x = a.replace(/\s+/g, '')
+    x && places.push(x)
+  })
+}
