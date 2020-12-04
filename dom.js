@@ -10,7 +10,8 @@
  * @LastEditTime: 
  * @Date: 2019-09-17 16:02:54
  */
-function $(str) { return document.querySelector(str) }
+// function $(str) { return document.querySelector(str) }
+const $ = document.querySelector.bind(document)
 
 
 

@@ -90,15 +90,22 @@ class Dates extends Date {
     return getCalendarArr
   }
 
+  
+
 
   /**
-   * @Description: 获取七天前的datas对象
+   * @Description: 获取n前的datas对象
    * @param {number} n 正式向前跳跃，负数向后跳跃 
    * @return: {Dates} 返回跳转后的datas对象 
    * @case: 
    */
-  jumpDay(n) {
-    let nowTN = this.getTime()
-    return new Dates((n !== undefined && typeof n === "number") ? nowTN + (86400000 * n) : nowTN)
+  jumpDay(date,n) {
+    if(typeof date === 'number'){
+      return new Dates( nowTN + (86400000 * n))
+    }
+
+    let nowTN = new Dates()
+
+
   }
 }
