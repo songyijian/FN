@@ -1,0 +1,53 @@
+/*
+ * @Description: sass公用 mixin
+ * @Author: yijian.song
+ * @Date: 2020-08-19 10:53:13
+ * @LastEditors: yijian.song
+ * @LastEditTime: 2021-01-07 16:05:19
+ */
+
+@mixin showline($linesize) {
+  @if $linesize == 1{
+    table-layout:fixed;
+    word-break:keep-all;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }@else{
+    display: -webkit-box;
+    -webkit-line-clamp: $linesize;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@mixin bgblur($blur:10px) {
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+}
+
+
+@mixin gray($size:100%) {
+  -webkit-filter: grayscale($size); 
+  filter: grayscale($size); 
+  filter: gray; 
+}
+
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+      @content;
+  }
+  @keyframes #{$animationName} {
+      @content;
+  }
+}
+
+
+// 业务相关
+@mixin stars($onesize:5vw) {
+  span{line-height: $onesize; width: $onesize; height: $onesize;}
+  .starbox #startn {
+    display: none;
+  }
+}

@@ -1,0 +1,137 @@
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box
+}
+
+html {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-user-select: none;
+  background-color: #fff;
+  color: #414d56;
+  font-style: normal
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: relative
+}
+
+main {
+  display: block
+}
+
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+p,
+blockquote,
+th,
+td,
+button,
+optgroup,
+select,
+textarea {
+  margin: 0;
+  padding: 0
+}
+
+del,
+ins,
+u,
+s,
+a,
+a:hover {
+  text-decoration: none
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+em,
+b,
+strong {
+  font-style: normal;
+  font-weight: 600
+}
+
+address,
+cite,
+dfn,
+em,
+var {
+  font-style: normal
+}
+
+ol,
+li {
+  list-style: none
+}
+
+template,
+[hidden] {
+  display: none
+}
+
+button,
+select {
+  text-transform: none
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button
+}
+
+button,
+select,
+input,
+textarea,
+area {
+  font-size: 100%;
+  border-radius: 0;
+  border: 0;
+  outline: 0;
+  box-sizing: border-box;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -ms-appearance: none
+}
+
+fieldset {
+  padding: .35em .75em .625em
+}
+
+textarea {
+  overflow: auto
+}
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto
+}

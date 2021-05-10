@@ -1,10 +1,50 @@
 /*
  * @Description: node 业务常用方法
  * @Author: yijian.song
- * @LastEditors: Please set LastEditors
+ * @LastEditors: yijian.song
  * @Date: 2018-10-12 20:20:41
- * @LastEditTime: 2019-08-14 19:04:57
+ * @LastEditTime: 2020-04-04 19:55:22
  */
+
+
+
+const fs = require('fs-extra')
+const slash = require('slash')
+const path = require("path")
+
+// 是否存在可读写的路径文件夹
+function isDirCallFn(url, fn) {
+  fs.access(url, fs.constants.R_OK | fs.constants.W_OK, (err) => {
+    err ? fn(false) : fn(true)
+  })
+}
+
+// 是否存在合法文件
+function isFileCallFn(url, fn) {
+  fs.stat(url, function (err, stat) {
+    err ? fn(false) : fn(true)
+  })
+}
+
+// 是否存在合法文件
+function isFileUrl(url) {
+  return path.extname(slash(url)).length > 1;
+}
+
+// 获取用户ip
+function getClientIp(req) {
+  var ipAddress;
+  var forwardedIpsStr = req.header('x-real-ip') || req.header('x-forwarded-for')
+  if (forwardedIpsStr) {
+    var forwardedIps = forwardedIpsStr.split(',')
+    ipAddress = forwardedIps[0];
+  }
+  if (!ipAddress) {
+    ipAddress = req.connection.remoteAddress
+  }
+  return ipAddress.substring(7)
+}
+
 
 
 /**
