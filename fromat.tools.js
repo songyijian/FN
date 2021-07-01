@@ -4,20 +4,17 @@
  * @Version: 3.0.0
  * @Date: 2021-06-29 20:27:29
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-06-29 20:29:51
+ * @LastEditTime: 2021-06-30 11:11:03
  */
 
 /**
  * @description: 分位格式化
  * @param {number} num
- * @param {object} config = { unit, head, tail }
- * @param {string} head 头字符
- * @param {string} tail 尾字符
+ * @param {number} unit
  * @return {string}
- * 12345678 > 12,34,56,78
+ * 12345678 > 12,345,678
  */
-export const enQuantile = (num = "", config = {}) => {
-  const { unit = 3, head = "", tail = "" } = config;
+export const enQuantile = (num = "", unit = 3) => {
   let n = String(num);
   let result = "";
   while (n.length > unit) {
@@ -25,7 +22,7 @@ export const enQuantile = (num = "", config = {}) => {
     n = n.slice(0, n.length - unit);
   }
   n && (result = n + result);
-  return String(head) + result + String(tail);
+  return result;
 };
 
 /**
