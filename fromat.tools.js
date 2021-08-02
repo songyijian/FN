@@ -4,7 +4,7 @@
  * @Version: 3.0.0
  * @Date: 2021-06-29 20:27:29
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-06-30 11:11:03
+ * @LastEditTime: 2021-08-02 15:38:46
  */
 
 /**
@@ -14,14 +14,15 @@
  * @return {string}
  * 12345678 > 12,345,678
  */
-export const enQuantile = (num = "", unit = 3) => {
-  let n = String(num);
-  let result = "";
+export const enQuantile = (num = '', unit = 3) => {
+  let [n = '', ns] = String(num).split('.');
+  let result = '';
   while (n.length > unit) {
-    result = "," + n.slice(-unit) + result;
+    result = ',' + n.slice(-unit) + result;
     n = n.slice(0, n.length - unit);
   }
   n && (result = n + result);
+  ns && (result = result + `.${ns}`);
   return result;
 };
 
@@ -32,9 +33,9 @@ export const enQuantile = (num = "", unit = 3) => {
  * @return {string ｜ number}
  * 12,34,56,78 > 12345678
  */
-export const deQuantile = (str = "", type = Number) => {
-  if (str === "") return;
-  let a = String(str).split(",").join("");
+export const deQuantile = (str = '', type = Number) => {
+  if (str === '') return;
+  let a = String(str).split(',').join('');
   return type(a);
 };
 
