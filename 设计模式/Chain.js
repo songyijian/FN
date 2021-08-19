@@ -5,6 +5,10 @@
  * @Date: 2021-08-19 16:37:08
  */
 
+/***
+ * promise 中间件
+ * use() 接收一个promise 对象
+ */
 class Chain {
   constructor() {
     this.db = []
@@ -14,19 +18,19 @@ class Chain {
     return this
   }
   run(...arg) {
-    return this.db.reduce((a, f) => f(a), Promise.resolve(...arg))
+    return this.db.reduce((a, f) => a.then(_ => f(...arg)), Promise.resolve())
   }
 }
 
-let a = a => a + 1
-let b = a => 21
-let c = a => a + 1
+const a = async a => a + 1
+const b = async a => a + 2
+const err = async a => {
+  throw Error('断开xxxxxxx')
+}
 
-;(async () => {
-  try {
-    const chain = await new Chain().use(a).use(b).use(c).run(10)
-    console.log(chain)
-  } catch (error) {
-    console.error(error)
-  }
-})()
+let ff = new Chain().use(a).use(err).use(b).run(1)
+ff.then(data => {
+  console.log(data)
+}).catch(err => {
+  console.log(err)
+})
