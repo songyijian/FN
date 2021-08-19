@@ -1,39 +1,49 @@
+/*
+ * @Description: 发布订阅类
+ * @Author: yijian
+ * @Version: 0.1.0
+ * @Date: 2021-06-11 17:53:31
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-07-16 17:54:23
+ */
 "use strict";
 
 function Event(name) {
-  this.ev = {}
-  if(name){ this.name = name}
+  this.ev = {};
+  if (name) {
+    this.name = name;
+  }
 }
 
 Event.prototype.on = function (type, fn) {
-  if (typeof fn !== 'function' || typeof type !== 'string') return;
-  (this.ev[type] || (this.ev[type] =[])).push({func:fn, type:'on'})
-  return this
-}
+  if (typeof fn !== "function" || typeof type !== "string") return;
+  (this.ev[type] || (this.ev[type] = [])).push({ func: fn, type: "on" });
+  return this;
+};
 
 Event.prototype.once = function (type, fn) {
-  if (typeof fn !== 'function'  || typeof type !== 'string') return;
-  (this.ev[type] || (this.ev[type] =[])).push({func: fn, type: 'once'})
-  return this
-}
+  if (typeof fn !== "function" || typeof type !== "string") return;
+  (this.ev[type] || (this.ev[type] = [])).push({ func: fn, type: "once" });
+  return this;
+};
 
 Event.prototype.emit = function (type) {
   var args = [].slice.call(arguments, 1),
-      evt = this.ev[type],
-      inon = [];
+    evt = this.ev[type],
+    inon = [];
   if (evt) {
     for (var index = 0; index < evt.length; index++) {
       try {
         evt[index].func.apply(this, args);
-        evt[index].type === 'on' && inon.push(evt[index])
+        evt[index].type === "on" && inon.push(evt[index]);
       } catch (error) {
-        console.error(`[ Event ] Error:${this.name} - ${evt[index].type} - ${type} - ${evt[index].func}`,error)
+        console.error(`[ Event ] Error:${this.name} - ${evt[index].type} - ${type} - ${evt[index].func}`, error);
       }
     }
-    this.ev[type] = inon
-  } 
-  return this
-}
+    this.ev[type] = inon;
+  }
+  return this;
+};
 
 Event.prototype.off = function (type, fn) {
   if (fn === undefined) {
@@ -47,7 +57,7 @@ Event.prototype.off = function (type, fn) {
       }
     }
   }
-  return this
-}
+  return this;
+};
 
-export default Event
+export default Event;
