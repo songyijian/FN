@@ -24,12 +24,11 @@ class Chain {
 
 {
   // promise 职责连 test
-  const a = async a => a + 1
-  const b = async a => a + 2
-  const err = async a => {
-    throw Error('断开xxxxxxx')
-  }
-
+  // const a = async a => a + 1
+  // const b = async a => a + 2
+  // const err = async a => {
+  //   throw Error('断开xxxxxxx')
+  // }
   //   let ff = new Chain().use(a).use(b).use(b).run(1)
   //   ff.then(data => {
   //     console.log(data)
@@ -49,10 +48,10 @@ function nextfn() {
       return this
     },
     next(a) {
-      this.list.length && this.list.shift()(a, this.next.bind(this))
+      return this.list.length && this.list.shift()(a, this.next.bind(this))
     },
-    run() {
-      this.next()
+    run(arg) {
+      return this.next(arg)
     }
   }
   return db
@@ -81,7 +80,7 @@ function nextfn() {
     var a = await app.run()
     console.log('/2/洋葱模型，中间件//', a)
   }
-  // fn()
+  fn()
 }
 
 /**
@@ -121,10 +120,10 @@ class NextPromise {
   //   console.log('6')
   // })
 
-  const fn = async () => {
-    console.log('/1///')
-    var a = await app.run()
-    console.log('/2///', a)
-  }
-  fn(1000)
+  // const fn = async () => {
+  //   console.log('/1///')
+  //   var a = await app.run()
+  //   console.log('/2///', a)
+  // }
+  // fn(1000)
 }
