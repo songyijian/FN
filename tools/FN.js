@@ -2,12 +2,11 @@
  * @Description: 工作中常用方法整理
  * @Author: yijian.song
  * @Date: 2018-10-12 20:20:41
- * @LastEditTime: 2020-07-10 19:41:36
- * @LastEditors: yijian.song
+ * @LastEditTime: 2021-12-09 13:45:05
+ * @LastEditors: Please set LastEditors
  *
  *  推荐 https://segmentfault.com/a/1190000011966867
  */
-
 
 /**
  * @Description: getObjectURL 获取file文件的本地url地址
@@ -15,18 +14,16 @@
  * @return {str} url 本地文件地址链接
  */
 function getObjectURL(file) {
-  var url = null;
+  var url = null
   if (window.createObjcectURL != undefined) {
-    url = window.createOjcectURL(file);
+    url = window.createOjcectURL(file)
   } else if (window.URL != undefined) {
-    url = window.URL.createObjectURL(file);
+    url = window.URL.createObjectURL(file)
   } else if (window.webkitURL != undefined) {
-    url = window.webkitURL.createObjectURL(file);
+    url = window.webkitURL.createObjectURL(file)
   }
-  return url;
+  return url
 }
-
-
 
 /**
  * @Description: getImgSize 获取图片文件的信息（width,height）
@@ -45,7 +42,7 @@ function getImgSize(url) {
         width: img.width,
         height: img.height
       })
-      img = null;
+      img = null
     }
     img.onerror = () => {
       img = null
@@ -54,8 +51,6 @@ function getImgSize(url) {
   })
 }
 
-
-
 /**
  * @Description: 按照字节长度取字符串
  * @param {str} str
@@ -63,13 +58,16 @@ function getImgSize(url) {
  * @return: {type} str
  */
 function cutStr(str, L) {
-  var result = '', strlen = str.length, chrlen = str.replace(/[^\x00-\xff]/g,'**').length, i = 0;
+  var result = '',
+    strlen = str.length,
+    chrlen = str.replace(/[^\x00-\xff]/g, '**').length,
+    i = 0
   if (chrlen <= L) return str
   for (i, j = 0; i < strlen; i++) {
     var chr = str.charAt(i)
-    if(/[\x00-\xff]/.test(chr)){
+    if (/[\x00-\xff]/.test(chr)) {
       j++
-    }else{
+    } else {
       j += 2
     }
     if (j <= L) {
@@ -79,9 +77,6 @@ function cutStr(str, L) {
     }
   }
 }
-
-
-
 
 /**
  * @Description:  模版替换函数 {var}
@@ -93,30 +88,28 @@ function cutStr(str, L) {
  */
 
 function templateFill(str, data) {
-  var newStr = str;
-  if (typeof str !== "string") {
+  var newStr = str
+  if (typeof str !== 'string') {
     throw 'templateFill 模版非字符串'
   }
 
-  var strDataKeyList = str.match(/\{[a-zA-Z\.\_]+\}/gi); //匹配规则
+  var strDataKeyList = str.match(/\{[a-zA-Z\.\_]+\}/gi) //匹配规则
   strDataKeyList.forEach(item => {
     var keylist = item.substr(1, item.length - 2).split('.')
-    newStr = newStr.replace(new RegExp(item, "g"), getObj(data.dataList, keylist))
+    newStr = newStr.replace(new RegExp(item, 'g'), getObj(data.dataList, keylist))
   })
   newStr = newStr.replace(/:src/g, 'src') // 处理静态文件初始化报错
   return newStr
 
   /* 对象 多层取值方法 */
   function getObj(data, keylist) {
-    var oj = data;
+    var oj = data
     keylist.forEach(k => {
       oj = oj[k]
     })
-    return typeof oj === "object" ? JSON.stringify(oj) : oj
+    return typeof oj === 'object' ? JSON.stringify(oj) : oj
   }
 }
-
-
 
 /**
  * @Description: 干掉URL的origin
@@ -126,10 +119,15 @@ function templateFill(str, data) {
  *          >"pages/viewpage.action"
  */
 function trimRegion(url) {
-  return '/' + url.replace(/https:\/\/|http:\/\//, "").split('/').slice(1).join('/')
+  return (
+    '/' +
+    url
+      .replace(/https:\/\/|http:\/\//, '')
+      .split('/')
+      .slice(1)
+      .join('/')
+  )
 }
-
-
 
 /**
  * @Description: 单层json,转数组
@@ -148,9 +146,6 @@ function jsonToArray(obj) {
   return ndata
 }
 
-
-
-
 /**
  * @Description: html尖括号转译
  * @param {str} str 要转译的html字符串
@@ -158,17 +153,11 @@ function jsonToArray(obj) {
  */
 function escapeHtml(str) {
   if (/</g.test(str)) {
-    str = str.replace(/</g, '&lt;');
-    str = str.replace(/>/g, '&gt;');
+    str = str.replace(/</g, '&lt;')
+    str = str.replace(/>/g, '&gt;')
   }
-  return str;
+  return str
 }
-
-
-
-
-
-
 
 /**
  * @Description:  URLParams url参数序列化和反序列化
@@ -178,37 +167,37 @@ function escapeHtml(str) {
  *  URLParams({a:'trtfds',b:123456}) > a=trtfds&b=123456
  *  URLParams("demos/FN验证.html?q=searchParams&topic=api") > {"q":"searchParams","topic":"api"}
  */
-function URLParams(o){
-  if(typeof o === 'string' && o.trim().length>2){
+function URLParams(o) {
+  if (typeof o === 'string' && o.trim().length > 2) {
     let url = o
-    if(o.lastIndexOf('?')>=0){
+    if (o.lastIndexOf('?') >= 0) {
       url = o.split('?')[1]
     }
     return JSON.parse('{"' + decodeURIComponent(url).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
-  }else if(Object.prototype.toString.call(o).slice(8, -1) === 'Object'){
-    if (!o) return '';
-    let pairs = [];
+  } else if (Object.prototype.toString.call(o).slice(8, -1) === 'Object') {
+    if (!o) return ''
+    let pairs = []
     for (var key in o) {
-      var value = o[key];
+      var value = o[key]
       if (value instanceof Array) {
         for (var i = 0; i < value.length; ++i) {
           pairs.push(encodeURIComponent(key + '[' + i + ']') + '=' + encodeURIComponent(value[i]))
         }
         continue
       }
-      pairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(o[key]));
+      pairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(o[key]))
     }
-    return pairs.join('&');
+    return pairs.join('&')
   }
 
   throw 'URLParams 参数错误！'
 }
 
-
-
-
-
-
+export function getURLParams(url) {
+  if (typeof url !== 'string') return
+  let strData = url.split('?')[1]
+  return strData ? JSON.parse('{"' + decodeURIComponent(strData).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}') : undefined
+}
 
 // Random ---------
 /**
@@ -218,11 +207,8 @@ function URLParams(o){
  * @return {Number}
  */
 function randomNum(min, max) {
-  return Math.floor(min + Math.random() * (max - min));
+  return Math.floor(min + Math.random() * (max - min))
 }
-
-
-
 
 /**
  * @Description: 版本比较方法函数
@@ -237,31 +223,36 @@ function randomNum(min, max) {
  * @Date: 2019-10-11 20:27:19
  */
 function cprversion(a, f, b) {
-  if (arguments.length < 2) { return }
+  if (arguments.length < 2) {
+    return
+  }
   function toNum(a) {
-    var a = a.toString();
-    var c = a.split('.');
-    var num_place = ["", "0", "00", "000", "0000"], r = num_place.reverse();
+    var a = a.toString()
+    var c = a.split('.')
+    var num_place = ['', '0', '00', '000', '0000'],
+      r = num_place.reverse()
     for (var i = 0; i < c.length; i++) {
-      var len = c[i].length;
-      c[i] = r[len] + c[i];
+      var len = c[i].length
+      c[i] = r[len] + c[i]
     }
-    var res = c.join('');
-    return res;
+    var res = c.join('')
+    return res
   }
 
-  if (typeof f !== "undefined" && (f === "<" || f === ">" || f === "=")) {
-    if (f === "=") { return toNum(a) === toNum(b); }
-    if (f === ">") { return toNum(a) > toNum(b); }
-    if (f === "<") { return toNum(a) < toNum(b); }
+  if (typeof f !== 'undefined' && (f === '<' || f === '>' || f === '=')) {
+    if (f === '=') {
+      return toNum(a) === toNum(b)
+    }
+    if (f === '>') {
+      return toNum(a) > toNum(b)
+    }
+    if (f === '<') {
+      return toNum(a) < toNum(b)
+    }
   } else {
-    return toNum(a) > toNum(b);
+    return toNum(a) > toNum(b)
   }
 }
-
-
-
-
 
 /**
  * @Description: 数组差集函数
@@ -281,29 +272,29 @@ function difference(a, b, fkey) {
     return Object.prototype.toString.call(o).slice(8, -1)
   }
   function isArray(o) {
-    return Object.prototype.toString.call(o).slice(8, -1) === "Array"
+    return Object.prototype.toString.call(o).slice(8, -1) === 'Array'
   }
-  if (!isArray(a) || !isArray(b)){
+  if (!isArray(a) || !isArray(b)) {
     throw '对象不是array'
     return []
   }
 
-  if (a.length == 0 || b.length == 0 ){
+  if (a.length == 0 || b.length == 0) {
     return a.concat(b)
   }
 
   let r = []
   switch (isType(fkey)) {
-    case "Undefined":
+    case 'Undefined':
       a.forEach(item => {
         !b.some(as => as === item) && r.push(item)
       })
       b.forEach(item => {
         !a.some(as => as === item) && r.push(item)
       })
-      break;
+      break
 
-    case "String":
+    case 'String':
       a.forEach(item => {
         let i = item[fkey]
         !b.some(as => as[fkey] === i) && r.push(item)
@@ -312,16 +303,16 @@ function difference(a, b, fkey) {
         let i = item[fkey]
         !a.some(as => as[fkey] === i) && r.push(item)
       })
-      break;
+      break
 
-    case "Function":
+    case 'Function':
       a.forEach(item => {
         !b.some(as => !fkey(as, item)) && r.push(item)
       })
       b.forEach(item => {
         !a.some(as => !fkey(as, item)) && r.push(item)
       })
-      break;
+      break
 
     default:
       throw 'fkey 参数格式错误'
@@ -337,10 +328,10 @@ function difference(a, b, fkey) {
  * @Author: yijian.song
  * @Version: 3.2.0
  * @Date: 2020-07-09 17:50:47
- * 
+ *
  * unique ([1,2,'',2,1]) > [1, 2, ""]
  */
-function unique (arr) {
+function unique(arr) {
   return Array.from(new Set(arr))
 }
 
@@ -351,16 +342,16 @@ function unique (arr) {
  * @Author: yijian.song
  * @Version: 3.2.0
  * @Date: 2020-07-09 18:38:19
- * 
+ *
  * strToIdlist(`
  * 1 we
  * dd
- * 
+ *
  * f33
  * `)
  *  > ['1we','dd','f33']
  */
-function strToIdlist(str){
+function strToIdlist(str) {
   var places = []
   unique(str.split('\n')).forEach(a => {
     var x = a.replace(/\s+/g, '')
