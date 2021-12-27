@@ -2,7 +2,7 @@
  * @Description: 数据类型验证函数集合
  * @Author: songyijian
  * @Date: 2019-07-15 14:00:39
- * @LastEditTime: 2021-12-14 19:08:44
+ * @LastEditTime: 2021-12-15 10:34:18
  * @LastEditors: Please set LastEditors
  */
 
@@ -157,5 +157,5 @@ export function isUrl(str) {
 
 // 邮箱
 export function isEmail(str) {
-  return /^\w+((.\w+)|(-\w+))@[A-Za-z0-9]+((.|-)[A-Za-z0-9]+).[A-Za-z0-9]+$/.test(str)
+  return /^[A-Za-z0-9]+([_\.][A-Za-z0-9]+)*@([A-Za-z0-9\-]+\.)+[A-Za-z]{2,6}$/.test(str)
 }
