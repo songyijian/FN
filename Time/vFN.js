@@ -18,6 +18,12 @@ function timeMS(val) {
     .replace(/\b(\d)\b/g, '0$1')
 }
 
+/**
+ * @Description: 时间格式化
+ * @param {t} 要格式的时间
+ * @return {*} 格式
+ * @Author: yijian
+ */
 // 格式化
 function tiemFormat(t = new Date(), fmt = 'yyyy-MM-dd h:m:s.s') {
   const tf = n => (n < 10 ? '0' + n : n)
