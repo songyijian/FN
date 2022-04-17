@@ -15,18 +15,25 @@
  */
 
 export function tIntervarl(fn, t = 0, ...args) {
-  clearTimeout(ot)
   var time = t
-  var ot = setTimeout(function func() {
+  var config = {
+    ot: undefined,
+    clear() {
+      clearTimeout(this.ot)
+      this.ot = undefined
+    },
+    setTime(n) {
+      time = n
+    },
+    steps: 0
+  }
+
+  config.ot = setTimeout(function func() {
     config.steps += 1
     fn.apply(this, args)
-    ot = setTimeout(func, time)
+    config.ot = config.ot && setTimeout(func, time)
+    console.log(config.ot)
   }, t)
-  var setTime = n => (time = n)
-  var clear = () => {
-    clearTimeout(ot)
-    time = ot = null
-  }
-  var config = { clear, setTime, steps: 0 }
+
   return config
 }
