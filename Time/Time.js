@@ -4,7 +4,7 @@
  * @Version: 1.0.0
  * @Date: 2021-06-29 09:58:23
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-11-19 16:20:56
+ * @LastEditTime: 2022-05-06 16:39:21
  */
 
 class Time extends Date {
@@ -78,6 +78,11 @@ class Time extends Date {
     return new Date(year, 1, 28, 24, 0, 0).getDate() === 29
   }
 }
+
+// Time.leapYear()  闰年
+// Time.leapYear()
+
+console.log(new Time().getCalendar())
 
 // export default Time
 // new Date(2024,1,28,24,0,0).getDate() === 29 为闰月

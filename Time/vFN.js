@@ -23,6 +23,7 @@ function timeMS(val) {
  * @param {t} 要格式的时间
  * @return {*} 格式
  * @Author: yijian
+ * tiemFormat(t, 'dd/MM/yyyy') //	29/01/2021
  */
 // 格式化
 function tiemFormat(t = new Date(), fmt = 'yyyy-MM-dd h:m:s.s') {
@@ -48,10 +49,24 @@ function tiemFormat(t = new Date(), fmt = 'yyyy-MM-dd h:m:s.s') {
   return fmt.replace(/[a-z]+/gi, $1 => obj[$1])
 }
 
-console.log(tiemFormat())
+// console.log(tiemFormat())
 
-// // dd/mm/yyyy hh:mm:ss
-// export const fFullTime = t => tiemFormat(t, 'dd/MM/yyyy hh:m:s')
+/**
+ * @Description: 获取计算后的newDate对象
+ * @param {number} year -n，n年前
+ * @param {number} month -n，n月前
+ * @param {number} day 同上
+ * @return {Date}
+ * @Author: yijian
+ * getCalcDate(10) 2032-04-04T16:00:00.000Z // 当前时间2022-04-04T16:00:00.000Z
+ */
+function getCalcDate(year = 0, month = 0, day = 0) {
+  const now = new Date()
+  return new Date(
+    `${now.getFullYear() + year}-${now.getMonth() + month}-${
+      now.getDay() + day
+    }`
+  )
+}
 
-// // 	29/01/2021
-// export const fDate = t => tiemFormat(t, 'dd/MM/yyyy')
+// console.log(getCalcDate())
